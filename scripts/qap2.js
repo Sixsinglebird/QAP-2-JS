@@ -134,11 +134,20 @@ console.log(snake("Is this thing working"));
  * ******************************************************************************/
 
 // create video element
-function createVideo(src, width, controls) {
-  src = cleanUp(src);
-  return controls
-    ? `<video src="${src}" width="${width}" controls></video>`
-    : `<video src="${src}" width="${width}"></video>`;
+function createVideo(...values) {
+  var inputs = values;
+  if (inputs.length > 0) {
+    if (/\d+/.test(values[1]) & (pureBool(values[2]) === true)) {
+      return `<video src="${values[0]}" width="${values[1]}" controls></video>`;
+    }
+    if (values[1] === true) {
+      return `<video src="${values[0]}" controls></video>`;
+    }
+    if (/\d+/.test(values[1])) {
+      return `<video src="${values[0]}" width="${values[1]}"></video>`;
+    }
+  }
+  return `<video src="${values[0]}"></video>`;
 }
 
 console.log("2.0");
@@ -146,7 +155,7 @@ console.log(
   createVideo(
     "http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_60fps_normal.mp4",
     650,
-    true
+    "oui"
   )
 );
 /*******************************************************************************
